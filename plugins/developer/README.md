@@ -115,6 +115,29 @@ Analyzes your changes and creates a pull request with AI-generated title and des
 
 ---
 
+### Handle Conflicts
+**Command**: `/handle-conflicts`
+
+Assists with resolving git merge conflicts during merge, rebase, or cherry-pick operations.
+
+**Features:**
+- Detects operation type (merge, rebase, cherry-pick)
+- Lists all conflicted files
+- Provides context about current branch and commits being applied
+- Guides through systematic conflict resolution
+- Supports reviewing changes for future auditing
+
+**Usage:**
+```bash
+# When you have merge conflicts
+/handle-conflicts
+```
+
+**Prerequisites:**
+- Active merge/rebase/cherry-pick with conflicts
+
+---
+
 ## 🔌 MCP Servers
 
 ### Linear
@@ -281,9 +304,9 @@ The Linear MCP is pre-configured in `plugin.json`:
 ```json
 {
   "mcpServers": {
-    "linear": {
-      "transport": "http",
-      "url": "https://mcp.linear.app/mcp"
+    "linear-server": {
+      "type": "sse",
+      "url": "https://mcp.linear.app/sse"
     }
   }
 }
@@ -330,6 +353,6 @@ To add or improve agents:
 
 ---
 
-**Version**: 1.1.0
+**Version**: 1.2.0
 **Maintainer**: Keboola :(){:|:&};: s.r.o.
 **License**: MIT

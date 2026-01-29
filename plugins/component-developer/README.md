@@ -75,6 +75,19 @@ Expert skill for code review with actionable feedback grouped by severity.
 
 Guide for initializing new Keboola components using cookiecutter template.
 
+### Migrate Component to UV
+**Command**: `@migrate-component-to-uv`
+**Color**: 🟣 Purple
+
+Expert skill for migrating Keboola Python packages from legacy `setup.py` + pip to modern `pyproject.toml` + uv build system with deterministic dependencies.
+
+**Use cases:**
+- Migrate from `setup.py` to `pyproject.toml`
+- Modernize build system to use uv instead of pip
+- Add deterministic dependency management with `uv.lock`
+- Update CI/CD workflows to use uv
+- Follow Keboola's python-http-client and python-component patterns
+
 ---
 
 ## ⚡ Available Commands
@@ -552,8 +565,12 @@ plugins/component-developer/
 │       │   └── initialization.md
 │       └── scripts/
 ├── commands/                           # Slash commands
-│   ├── fix.md
-│   └── review.md
+│   ├── fix.md                         # Apply review fixes
+│   ├── init.md                        # Initialize new component
+│   ├── migrate-repo.md                # Migrate from Bitbucket
+│   ├── review.md                      # Code review
+│   ├── run.md                         # Run component locally
+│   └── schema-test.md                 # Test configuration schemas
 └── README.md                          # This file
 ```
 

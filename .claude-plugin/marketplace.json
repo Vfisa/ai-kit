@@ -20,7 +20,7 @@
     {
       "name": "developer",
       "description": "Developer toolkit with specialized agents for code review and security analysis",
-      "version": "1.1.2",
+      "version": "1.2.0",
       "source": "./plugins/developer",
       "category": "development"
     },
@@ -30,6 +30,13 @@
       "version": "1.0.0",
       "source": "./plugins/dataapp-developer",
       "category": "development"
+    },
+    {
+      "name": "incident-commander",
+      "description": "Incident response toolkit for creating post-mortem documents from Slack incident channels",
+      "version": "1.0.0",
+      "source": "./plugins/incident-commander",
+      "category": "operations"
     }
   ]
 }

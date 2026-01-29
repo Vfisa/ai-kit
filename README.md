@@ -27,14 +27,10 @@ claude-kit/
 ├── .claude-plugin/
 │   └── marketplace.json     # Marketplace configuration
 ├── plugins/
-│   └── developer/           # Developer toolkit plugin
-│       ├── .claude-plugin/
-│       │   └── plugin.json  # Plugin configuration
-│       ├── agents/          # AI agents (code review, security, etc.)
-│       ├── commands/        # Slash commands (PR creation, etc.)
-│       ├── scripts/         # Automation scripts (settings install hook)
-│       ├── templates/       # Configuration templates (settings.json)
-│       └── README.md        # Plugin documentation
+│   ├── developer/           # Developer toolkit plugin
+│   ├── component-developer/ # Keboola Python component development
+│   ├── dataapp-developer/   # Streamlit data apps for Keboola
+│   └── incident-commander/  # Post-mortem creation from Slack
 ├── README.md                # This file
 └── LICENSE                  # MIT license
 ```
@@ -49,7 +45,7 @@ A comprehensive toolkit for developers including specialized agents for code rev
 
 **Features:**
 - 🤖 **4 Agents**: Code review, security analysis, code mess detection & fixing
-- ⚡ **1 Command**: AI-powered PR creation
+- ⚡ **2 Commands**: AI-powered PR creation, merge conflict resolution
 - 🔌 **1 MCP Server**: Linear integration
 - 🔐 **Auto-install Settings**: SessionStart hook that installs team-wide permissions automatically
 
@@ -62,11 +58,10 @@ A comprehensive toolkit for developers including specialized agents for code rev
 A specialized toolkit for building production-ready Keboola Python components following best practices and architectural patterns.
 
 **Features:**
-- 🤖 **1 Agent**: Keboola component builder with comprehensive knowledge
-- 🏗️ **Component Architecture**: Cookiecutter template integration
+- 🎯 **7 Skills**: Build component, build UI, debug, test, review, migrate to UV, getting started
+- ⚡ **6 Commands**: Init, run, fix, review, migrate-repo, schema-test
+- 🔌 **1 MCP Server**: Keboola integration
 - 📋 **Configuration Schemas**: JSON Schema with UI elements
-- 📊 **CSV Processing**: Memory-efficient patterns
-- 🔄 **State Management**: Incremental data processing
 - 🚀 **CI/CD Integration**: Developer Portal and deployment workflows
 
 **[→ View Component Developer Plugin Documentation](./plugins/component-developer/README.md)**
