@@ -330,6 +330,6 @@ To add or improve agents:
 
 ---
 
-**Version**: 1.1.0
+**Version**: 1.2.0
 **Maintainer**: Keboola :(){:|:&};: s.r.o.
 **License**: MIT
