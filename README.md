@@ -45,7 +45,7 @@ A comprehensive toolkit for developers including specialized agents for code rev
 
 **Features:**
 - 🤖 **4 Agents**: Code review, security analysis, code mess detection & fixing
-- ⚡ **2 Commands**: AI-powered PR creation, merge conflict resolution
+- ⚡ **3 Commands**: AI-powered PR creation, merge conflict resolution, GitHub PR review processing
 - 🔌 **1 MCP Server**: Linear integration
 - 🔐 **Auto-install Settings**: SessionStart hook that installs team-wide permissions automatically
 

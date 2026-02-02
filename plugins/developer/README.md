@@ -138,6 +138,41 @@ Assists with resolving git merge conflicts during merge, rebase, or cherry-pick 
 
 ---
 
+### Process PR Reviews
+**Command**: `/gh-process-review [continue]`
+
+Systematically process GitHub PR review comments by fetching threads to local JSON, implementing fixes one-by-one, and tracking progress.
+
+**Features:**
+- Fetches review threads via GraphQL (includes resolution status)
+- Stores reviews locally in `.scratch/reviews/` to avoid context pollution
+- Lists unresolved threads with smart filtering (excludes resolved/outdated)
+- Posts "Fixed in \<hash\>" replies to threads automatically
+- Tracks local resolution status for progress tracking
+- Supports "continue" mode to resume with existing reviews file
+
+**Usage:**
+```bash
+# Process reviews for current branch's PR
+/gh-process-review
+
+# Resume processing with existing reviews file
+/gh-process-review continue
+```
+
+**Workflow:**
+1. Fetches all review threads to local JSON
+2. Lists unresolved threads needing attention
+3. For each thread: read feedback → implement fix → commit → push → reply with commit hash
+4. Marks threads as locally resolved for tracking
+
+**Prerequisites:**
+- GitHub CLI (`gh`) installed and authenticated
+- Current branch has an associated PR with review comments
+- `jq` installed for JSON processing
+
+---
+
 ## 🔌 MCP Servers
 
 ### Linear
@@ -294,6 +329,10 @@ plugins/developer/
 ├── commands/
 │   ├── create-pr.md         # Slash command for PR creation
 │   └── handle-conflicts.md  # Slash command for merge conflicts
+├── skills/
+│   └── gh-process-review/   # GitHub PR review processing skill
+│       ├── SKILL.md
+│       └── scripts/         # Helper scripts for review processing
 └── README.md                # This file
 ```
 
