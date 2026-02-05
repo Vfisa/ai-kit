@@ -84,6 +84,27 @@ Systematically applies fixes based on code-mess-detector reports. Works through 
 
 ## ⚡ Slash Commands
 
+### Add Task
+**Command**: `/add-task <task description>`
+
+Quickly add a task to the task list without interrupting your current work context.
+
+**Features:**
+- Creates a pending task using TaskCreate
+- Immediately continues with current work
+- Keeps focus on what you're doing while noting things for later
+
+**Usage:**
+```bash
+# Add a task while working on something else
+/add-task Fix the failing unit test in auth module
+
+# Note something to come back to later
+/add-task Refactor the database connection handling
+```
+
+---
+
 ### Create PR
 **Command**: `/create-pr [base-branch]`
 
@@ -327,6 +348,7 @@ plugins/developer/
 │   ├── code-mess-detector.md
 │   └── code-mess-fixer.md
 ├── commands/
+│   ├── add-task.md          # Slash command for quick task creation
 │   ├── create-pr.md         # Slash command for PR creation
 │   └── handle-conflicts.md  # Slash command for merge conflicts
 ├── skills/
@@ -392,6 +414,6 @@ To add or improve agents:
 
 ---
 
-**Version**: 1.2.0
+**Version**: 1.3.0
 **Maintainer**: Keboola :(){:|:&};: s.r.o.
 **License**: MIT
