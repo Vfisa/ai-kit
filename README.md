@@ -44,9 +44,9 @@ claude-kit/
 A comprehensive toolkit for developers including specialized agents for code review, security analysis, code quality management, and workflow automation.
 
 **Features:**
-- 🤖 **4 Agents**: Code review, security analysis, code mess detection & fixing
-- ⚡ **3 Commands**: AI-powered PR creation, merge conflict resolution, GitHub PR review processing
-- 🔌 **1 MCP Server**: Linear integration
+- 🤖 **Agents**: Code review, security analysis, code mess detection & fixing
+- ⚡ **Commands**: Task management, PR creation, merge conflict resolution, GitHub PR review processing
+- 🔌 **MCP Server**: Linear integration
 - 🔐 **Auto-install Settings**: SessionStart hook that installs team-wide permissions automatically
 
 **[→ View Developer Plugin Documentation](./plugins/developer/README.md)**
@@ -58,9 +58,9 @@ A comprehensive toolkit for developers including specialized agents for code rev
 A specialized toolkit for building production-ready Keboola Python components following best practices and architectural patterns.
 
 **Features:**
-- 🎯 **7 Skills**: Build component, build UI, debug, test, review, migrate to UV, getting started
-- ⚡ **6 Commands**: Init, run, fix, review, migrate-repo, schema-test
-- 🔌 **1 MCP Server**: Keboola integration
+- 🎯 **Skills**: Build component, build UI, debug, test, review, migrate to UV, getting started
+- ⚡ **Commands**: Init, run, fix, review, migrate-repo, schema-test
+- 🔌 **MCP Server**: Keboola integration
 - 📋 **Configuration Schemas**: JSON Schema with UI elements
 - 🚀 **CI/CD Integration**: Developer Portal and deployment workflows
 
@@ -73,13 +73,13 @@ A specialized toolkit for building production-ready Keboola Python components fo
 A specialized toolkit for building production-ready Streamlit data apps for Keboola deployment with a systematic validate → build → verify workflow.
 
 **Features:**
-- 🎯 **1 Skill**: Data app development with validate → build → verify workflow
+- 🎯 **Skills**: Data app development with validate → build → verify workflow
 - 🔍 **Data Validation**: Automatic schema checking using Keboola MCP
 - 🎨 **Visual Verification**: Browser testing with Playwright MCP
 - 🏗️ **SQL-First Architecture**: Best practices for scalable data apps
 - 📚 **Comprehensive Docs**: Quickstart, workflows, templates, and checklists
 - 🛡️ **Bug Prevention**: Catches common issues before they become problems
-- 🔌 **2 MCP Servers**: Keboola (remote HTTP) and Playwright (browser automation)
+- 🔌 **MCP Servers**: Keboola (remote HTTP) and Playwright (browser automation)
 
 **[→ View Data App Developer Plugin Documentation](./plugins/dataapp-developer/README.md)**
 
@@ -90,7 +90,7 @@ A specialized toolkit for building production-ready Streamlit data apps for Kebo
 A specialized toolkit for incident response, helping incident commanders create comprehensive post-mortem documents from Slack incident channels.
 
 **Features:**
-- **1 Command**: Post-mortem creation from Slack incident channels
+- **Commands**: Post-mortem creation from Slack incident channels
 - **Confluence Integration**: Reads templates and creates structured documents
 - **Slack Integration**: Gathers incident information from channels and threads
 - **Structured Output**: Overview, Impact, Timeline, Action Items, and more
