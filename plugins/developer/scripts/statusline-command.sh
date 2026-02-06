@@ -12,7 +12,7 @@ transcript=$(echo "$input" | jq -r '.transcript_path')
 cost_usd=$(echo "$input" | jq -r '.cost.total_cost_usd // 0' 2>/dev/null)
 
 # Context progress bar
-pct=$(echo "$input" | jq '.context_window.used_percentage // empty' 2>/dev/null)
+pct=$(echo "$input" | jq '.context_window.used_percentage // empty | floor' 2>/dev/null)
 if [ -n "$pct" ] && [ "$pct" != "null" ] && [ "$pct" -ge 0 ] 2>/dev/null; then
     bar_width=10
     filled=$((pct * bar_width / 100))
