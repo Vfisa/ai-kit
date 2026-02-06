@@ -30,7 +30,8 @@ claude-kit/
 │   ├── developer/           # Developer toolkit plugin
 │   ├── component-developer/ # Keboola Python component development
 │   ├── dataapp-developer/   # Streamlit data apps for Keboola
-│   └── incident-commander/  # Post-mortem creation from Slack
+│   ├── incident-commander/  # Post-mortem creation from Slack
+│   └── keboola-cli/         # Keboola project management and review
 ├── README.md                # This file
 └── LICENSE                  # MIT license
 ```
@@ -97,6 +98,21 @@ A specialized toolkit for incident response, helping incident commanders create 
 - **Blameless Format**: Focuses on systems and processes, not individuals
 
 **[→ View Incident Commander Plugin Documentation](./plugins/incident-commander/README.md)**
+
+### Keboola CLI Plugin
+
+**Location**: [`./plugins/keboola-cli`](./plugins/keboola-cli)
+
+A project management and review toolkit for Keboola projects. Includes CLI sync commands and a 10-agent review team that audits SQL quality, security, performance, financial logic, data quality, and template readiness.
+
+**Features:**
+- 🤖 **Agents**: 10 specialized review agents (SQL, Config, DWH Architecture, Data Quality, Financial Logic, Semantic Layer, Security, Performance, Template Readiness, Consolidator) + config analyzer
+- ⚡ **Commands**: `/kbc-init`, `/kbc-pull`, `/kbc-push`, `/kbc-diff`, `/kbc-review`
+- 🔌 **MCP Server**: Keboola integration for live project analysis
+- 📊 **Financial Intelligence**: Multi-ERP awareness (NetSuite, SAP, Oracle, D365, QuickBooks, Xero), SaaS metrics, budget variance
+- 🔒 **Security Audit**: Credential scanning, PII detection, GDPR/CCPA compliance checks
+
+**[→ View Keboola CLI Plugin Documentation](./plugins/keboola-cli/README.md)**
 
 ## MCP Server Setup
 
