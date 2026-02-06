@@ -2,9 +2,9 @@
 # Replies to a review thread with the commit hash that fixed the issue
 # Usage: reply_with_commit.sh <reviews-file> <thread-id> [commit-hash]
 #
-# IMPORTANT: Thread ID must include the PRRT_ prefix (full GraphQL ID)
-#
-# If commit-hash is omitted, uses HEAD
+# IMPORTANT: Run from the project root directory, NOT from the skill directory.
+# Thread ID must include the PRRT_ prefix (full GraphQL ID).
+# If commit-hash is omitted, uses HEAD.
 #
 # Examples:
 #   reply_with_commit.sh "$REVIEWS_FILE" PRRT_kwDOAbcd1234
@@ -12,12 +12,23 @@
 
 set -e
 
+# Detect script and skill directory locations
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SKILL_DIR="$(dirname "$SCRIPT_DIR")"
+
 REVIEWS_FILE="${1:?Usage: reply_with_commit.sh <reviews-file> <thread-id> [commit-hash]}"
 THREAD_ID="${2:?Usage: reply_with_commit.sh <reviews-file> <thread-id> [commit-hash]}"
 COMMIT_HASH="${3:-$(git rev-parse HEAD)}"
 
 if [[ ! -f "$REVIEWS_FILE" ]]; then
   echo "Error: File not found: $REVIEWS_FILE" >&2
+  echo "Expected path relative to project root or absolute path." >&2
+  exit 1
+fi
+
+# Validate we're in a git repository
+if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+  echo "Error: Not inside a git repository. Run this from your project root." >&2
   exit 1
 fi
 

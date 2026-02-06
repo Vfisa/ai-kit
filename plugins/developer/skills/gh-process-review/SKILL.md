@@ -7,13 +7,22 @@ description: Process GitHub PR review comments by fetching them to local JSON, i
 
 Process PR review threads efficiently by storing them locally and addressing them one by one.
 
+## Working Directory Context
+
+**CRITICAL: All commands MUST be run from the user's project root directory, NOT from the skill directory.**
+
+- The user will be in THEIR project directory when invoking this skill
+- All script paths use `$SKILL_DIR` to reference skill scripts with absolute paths
+- Scripts operate on the project directory (current working directory) by default
+- **DO NOT `cd` into the skill directory** - scripts handle path resolution internally
+
+`SKILL_DIR` = directory containing this SKILL.md (automatically resolved by Claude)
+
 ## CRITICAL Rules
 
-1. **NEVER `cd` into the skill directory.** All scripts must be called from the project root.
+1. **STAY IN PROJECT ROOT** - Never `cd` into the skill directory. Call scripts using `$SKILL_DIR/scripts/<name>.sh` from the project root.
 2. **ONE COMMIT PER FIX** - Each review thread fix MUST be committed separately. Never batch multiple fixes into one commit.
 3. **START IN PLANNING MODE** - Always enter planning mode first (unless context explicitly says otherwise like "skip planning" or "no planning").
-
-`SKILL_DIR` = directory containing this SKILL.md
 
 ## Workflow
 
@@ -72,7 +81,9 @@ For each unresolved thread (one at a time):
 
 ## Scripts
 
-All in `$SKILL_DIR/scripts/`. Call with full path from project directory.
+All in `$SKILL_DIR/scripts/`. Call with full path from the **project directory**.
+
+Scripts detect their own location internally using `BASH_SOURCE`, so they can reference sibling files if needed. They validate that they're running in a valid git repository.
 
 ### fetch_reviews.sh
 ```bash

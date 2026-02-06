@@ -3,6 +3,9 @@
 # Uses GraphQL to get thread resolution status
 # Usage: fetch_reviews.sh <pr-url-or-number> [output-dir]
 #
+# IMPORTANT: Run from the project root directory, NOT from the skill directory.
+# The script detects its own location and operates on the current working directory.
+#
 # Examples:
 #   fetch_reviews.sh "$(! gh pr view --json number -q .number)"  # Current branch PR
 #   fetch_reviews.sh 123
@@ -11,8 +14,19 @@
 
 set -e
 
+# Detect script and skill directory locations
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SKILL_DIR="$(dirname "$SCRIPT_DIR")"
+
 PR_REF="${1:?Usage: fetch_reviews.sh <pr-url-or-number> [output-dir]}"
 OUTPUT_DIR="${2:-.scratch/reviews}"
+
+# Validate we're in a git repository
+if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+  echo "Error: Not inside a git repository. Run this from your project root." >&2
+  echo "Usage: $0 <pr-url-or-number> [output-dir]" >&2
+  exit 1
+fi
 
 # Extract PR number and repo from URL if provided
 if [[ "$PR_REF" =~ github\.com/([^/]+)/([^/]+)/pull/([0-9]+) ]]; then

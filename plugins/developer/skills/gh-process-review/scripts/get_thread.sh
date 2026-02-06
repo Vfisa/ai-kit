@@ -2,7 +2,8 @@
 # Gets a single review thread's details from the reviews JSON file
 # Usage: get_thread.sh <reviews-file> <thread-id>
 #
-# IMPORTANT: Thread ID must include the PRRT_ prefix (full GraphQL ID)
+# IMPORTANT: Run from the project root directory, NOT from the skill directory.
+# Thread ID must include the PRRT_ prefix (full GraphQL ID).
 #
 # Examples:
 #   get_thread.sh "$REVIEWS_FILE" PRRT_kwDOAbcd1234
@@ -10,11 +11,16 @@
 
 set -e
 
+# Detect script and skill directory locations
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SKILL_DIR="$(dirname "$SCRIPT_DIR")"
+
 REVIEWS_FILE="${1:?Usage: get_thread.sh <reviews-file> <thread-id>}"
 THREAD_ID="${2:?Usage: get_thread.sh <reviews-file> <thread-id>}"
 
 if [[ ! -f "$REVIEWS_FILE" ]]; then
   echo "Error: File not found: $REVIEWS_FILE" >&2
+  echo "Expected path relative to project root or absolute path." >&2
   exit 1
 fi
 
