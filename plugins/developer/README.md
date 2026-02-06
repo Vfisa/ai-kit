@@ -212,6 +212,47 @@ Integration with Linear for issue tracking and project management.
 
 ---
 
+## 📊 Context Window Progress Bar
+
+A composable script that renders a colored progress bar of context window usage. Include it in your own statusline script.
+
+**Script**: `scripts/context-progressbar.sh`
+
+**Features:**
+- Visual bar with filled/empty blocks (`██░░`)
+- Color-coded: green (<70%), yellow (>70%), orange (>85%), blinking red (>95%)
+- Reads JSON from stdin (same format Claude Code passes to statusline commands)
+
+**Usage:**
+
+Create your own statusline script (e.g. `~/.claude/statusline.sh`):
+
+```bash
+#!/bin/bash
+input=$(cat)
+
+# Context progress bar from the plugin
+progress=$(echo "$input" | /path/to/plugins/developer/scripts/context-progressbar.sh)
+
+# Add your own sections here
+model=$(echo "$input" | jq -r '.model // empty')
+
+printf '%s %s' "$progress" "$model"
+```
+
+Then point your statusline config at your script in `.claude/settings.local.json`:
+
+```json
+{
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  }
+}
+```
+
+---
+
 ## 🔐 Auto-installed Settings
 
 Plugin automatically installs team-wide permissions via SessionStart hook:
@@ -351,6 +392,9 @@ plugins/developer/
 │   ├── add-task.md          # Slash command for quick task creation
 │   ├── create-pr.md         # Slash command for PR creation
 │   └── handle-conflicts.md  # Slash command for merge conflicts
+├── scripts/
+│   ├── install-settings.sh  # SessionStart hook for auto-installing settings
+│   └── context-progressbar.sh # Composable context window progress bar
 ├── skills/
 │   └── gh-process-review/   # GitHub PR review processing skill
 │       ├── SKILL.md
@@ -399,6 +443,6 @@ To add or improve agents:
 
 ---
 
-**Version**: 1.3.0
+**Version**: 1.4.0
 **Maintainer**: Keboola :(){:|:&};: s.r.o.
 **License**: MIT

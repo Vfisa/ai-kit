@@ -114,10 +114,6 @@
         "Write(**/.gitignore)",
         "Edit(**/.gitignore)"
       ]
-    },
-    "statusLine": {
-      "type": "command",
-      "command": "~/.claude/statusline-command.sh"
     }
   }
-  
+
