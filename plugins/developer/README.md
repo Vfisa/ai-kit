@@ -366,8 +366,8 @@ The Linear MCP is pre-configured in `plugin.json`:
 {
   "mcpServers": {
     "linear-server": {
-      "type": "sse",
-      "url": "https://mcp.linear.app/sse"
+      "type": "streamable-http",
+      "url": "https://mcp.linear.app/mcp"
     }
   }
 }
