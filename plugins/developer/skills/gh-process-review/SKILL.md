@@ -102,8 +102,10 @@ Scripts detect their own location internally using `BASH_SOURCE`, so they can re
 ### get_thread.sh
 ```bash
 "$SKILL_DIR/scripts/get_thread.sh" "$REVIEWS_FILE" PRRT_kwDOAbcd1234
+"$SKILL_DIR/scripts/get_thread.sh" "$REVIEWS_FILE" PRRT_kwDOAbcd1234 PRRT_kwDOEfgh5678
 ```
-Returns: Thread JSON with `path`, `line`, `comments[]`, `isResolved`, `isOutdated`.
+Returns: Single thread as JSON object, or JSON array when multiple IDs given.
+Fields: `path`, `line`, `comments[]`, `isResolved`, `isOutdated`. Warns on missing IDs.
 
 ### reply_with_commit.sh
 ```bash
