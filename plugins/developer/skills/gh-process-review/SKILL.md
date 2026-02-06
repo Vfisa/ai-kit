@@ -79,6 +79,14 @@ For each unresolved thread (one at a time):
 7. Mark resolved: `"$SKILL_DIR/scripts/mark_resolved.sh" "$REVIEWS_FILE" PRRT_...`
 8. **Only then** proceed to next thread
 
+### Phase 4: Reflection
+
+After all threads are addressed, reflect on the reviewer's feedback:
+
+1. **Could this feedback have been prevented?** If the reviewer caught issues that better instructions (in CLAUDE.md, MEMORY.md, or other project memory files) would have avoided, suggest specific additions to those files so the same mistakes don't recur.
+2. **Did you get confused while addressing any feedback?** If any review comment was ambiguous, required multiple attempts, or led you down a wrong path, suggest updating memory files with clarifying guidance for future iterations.
+3. Present the suggested memory updates to the user for approval before writing them.
+
 ## Scripts
 
 All in `$SKILL_DIR/scripts/`. Call with full path from the **project directory**.
