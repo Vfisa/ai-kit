@@ -358,21 +358,6 @@ plugins/developer/
 └── README.md                # This file
 ```
 
-### MCP Server Configuration
-
-The Linear MCP is pre-configured in `plugin.json`:
-
-```json
-{
-  "mcpServers": {
-    "linear-server": {
-      "type": "sse",
-      "url": "https://mcp.linear.app/sse"
-    }
-  }
-}
-```
-
 ---
 
 ## 💡 Tips
