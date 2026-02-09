@@ -47,6 +47,7 @@ A comprehensive toolkit for developers including specialized agents for code rev
 **Features:**
 - 🤖 **Agents**: Code review, security analysis, code mess detection & fixing
 - ⚡ **Commands**: Task management, PR creation, merge conflict resolution, GitHub PR review processing
+- 📊 **Scripts**: Context window progress bar for statusline
 - 🔌 **MCP Server**: Linear integration
 - 🔐 **Auto-install Settings**: SessionStart hook that installs team-wide permissions automatically
 
