@@ -4,7 +4,7 @@ This repository is the central library for all AI prompts and agent configuratio
 
 ## Installation
 
-Install skills using [add-skill](https://github.com/vercel-labs/add-skill): `npx add-skill keboola/ai-kit`
+Install skills using [skills tool](https://github.com/vercel-labs/skills): `npx skills add keboola/ai-kit`
 
 Alternatively, install via the Claude Code plugin marketplace:
 
