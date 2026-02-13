@@ -23,6 +23,7 @@ Process PR review threads efficiently by storing them locally and addressing the
 1. **STAY IN PROJECT ROOT** - Never `cd` into the skill directory. Call `$SKILL_DIR/scripts/review.sh` from the project root.
 2. **ONE COMMIT PER FIX** - Each review thread fix MUST be committed separately. Never batch multiple fixes into one commit.
 3. **START IN PLANNING MODE** - Always enter planning mode first (unless context explicitly says otherwise like "skip planning" or "no planning").
+4. **NEVER RESOLVE THREADS** - Do NOT use the GitHub API to resolve review threads. Only the reviewer may resolve their own comments. Use `mark` for local tracking only.
 
 ## Workflow
 
