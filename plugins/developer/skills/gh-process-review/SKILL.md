@@ -12,15 +12,15 @@ Process PR review threads efficiently by storing them locally and addressing the
 **CRITICAL: All commands MUST be run from the user's project root directory, NOT from the skill directory.**
 
 - The user will be in THEIR project directory when invoking this skill
-- All script paths use `$SKILL_DIR` to reference skill scripts with absolute paths
-- Scripts operate on the project directory (current working directory) by default
-- **DO NOT `cd` into the skill directory** - scripts handle path resolution internally
+- All script calls use `$SKILL_DIR/scripts/review.sh` — the single entry point
+- The script auto-detects the reviews file from the current branch's PR
+- **DO NOT `cd` into the skill directory** - the script handles path resolution internally
 
 `SKILL_DIR` = directory containing this SKILL.md (automatically resolved by Claude)
 
 ## CRITICAL Rules
 
-1. **STAY IN PROJECT ROOT** - Never `cd` into the skill directory. Call scripts using `$SKILL_DIR/scripts/<name>.sh` from the project root.
+1. **STAY IN PROJECT ROOT** - Never `cd` into the skill directory. Call `$SKILL_DIR/scripts/review.sh` from the project root.
 2. **ONE COMMIT PER FIX** - Each review thread fix MUST be committed separately. Never batch multiple fixes into one commit.
 3. **START IN PLANNING MODE** - Always enter planning mode first (unless context explicitly says otherwise like "skip planning" or "no planning").
 
@@ -31,17 +31,17 @@ Process PR review threads efficiently by storing them locally and addressing the
 Fetch reviews for current PR and list unresolved threads:
 
 ```bash
-REVIEWS_FILE=$("$SKILL_DIR/scripts/fetch_reviews.sh" "$(! gh pr view --json number -q .number)")
-"$SKILL_DIR/scripts/list_unresolved.sh" "$REVIEWS_FILE"
+"$SKILL_DIR/scripts/review.sh" fetch
 ```
+
+This auto-detects the PR from the current branch, fetches all review threads, and prints unresolved threads.
 
 #### Continue mode (`/gh-process-review continue`)
 
-Skip fetching, use existing reviews file:
+Skip fetching, list unresolved threads from existing reviews file:
 
 ```bash
-REVIEWS_FILE=".scratch/reviews/$(! gh repo view --json owner,name -q '"\(.owner.login)-\(.name)"')-pr-$(! gh pr view --json number -q .number).json"
-"$SKILL_DIR/scripts/list_unresolved.sh" "$REVIEWS_FILE"
+"$SKILL_DIR/scripts/review.sh" list
 ```
 
 ### Phase 2: Planning (default)
@@ -59,7 +59,7 @@ Skip planning only if user explicitly requests it (e.g., "skip planning", "no pl
 
 For each unresolved thread (one at a time):
 
-1. Get thread details: `"$SKILL_DIR/scripts/get_thread.sh" "$REVIEWS_FILE" PRRT_...`
+1. Get thread details: `"$SKILL_DIR/scripts/review.sh" get PRRT_...`
 2. Read the file and understand the feedback
 3. Implement the fix
 4. **COMMIT THIS FIX IMMEDIATELY** - Do not continue to next thread without committing:
@@ -75,8 +75,8 @@ For each unresolved thread (one at a time):
    )"
    ```
 5. Push the commit
-6. Reply with commit: `"$SKILL_DIR/scripts/reply_with_commit.sh" "$REVIEWS_FILE" PRRT_...`
-7. Mark resolved: `"$SKILL_DIR/scripts/mark_resolved.sh" "$REVIEWS_FILE" PRRT_...`
+6. Reply with commit: `"$SKILL_DIR/scripts/review.sh" reply PRRT_...`
+7. Mark resolved: `"$SKILL_DIR/scripts/review.sh" mark PRRT_...`
 8. **Only then** proceed to next thread
 
 ### Phase 4: Reflection
@@ -87,44 +87,51 @@ After all threads are addressed, reflect on the reviewer's feedback:
 2. **Did you get confused while addressing any feedback?** If any review comment was ambiguous, required multiple attempts, or led you down a wrong path, suggest updating memory files with clarifying guidance for future iterations.
 3. Present the suggested memory updates to the user for approval before writing them.
 
-## Scripts
+## CLI Reference
 
-All in `$SKILL_DIR/scripts/`. Call with full path from the **project directory**.
+Single entry point: `$SKILL_DIR/scripts/review.sh`
 
-Scripts detect their own location internally using `BASH_SOURCE`, so they can reference sibling files if needed. They validate that they're running in a valid git repository.
+### Global flags
 
-### fetch_reviews.sh
+- `--file <path>` — Override auto-detected reviews file path
+
+### Subcommands
+
+#### fetch
 ```bash
-"$SKILL_DIR/scripts/fetch_reviews.sh" "$(! gh pr view --json number -q .number)"  # Current PR
-"$SKILL_DIR/scripts/fetch_reviews.sh" 123
-"$SKILL_DIR/scripts/fetch_reviews.sh" https://github.com/owner/repo/pull/123
+"$SKILL_DIR/scripts/review.sh" fetch                                    # Current branch's PR
+"$SKILL_DIR/scripts/review.sh" fetch 123                                # Specific PR number
+"$SKILL_DIR/scripts/review.sh" fetch https://github.com/owner/repo/pull/123  # PR URL
+```
+Fetches review threads via GraphQL, saves to `.scratch/reviews/`, and auto-lists unresolved threads.
+
+#### list
+```bash
+"$SKILL_DIR/scripts/review.sh" list                # summary (default)
+"$SKILL_DIR/scripts/review.sh" list full           # full JSON details
+"$SKILL_DIR/scripts/review.sh" list ids            # just thread IDs
 ```
 
-### list_unresolved.sh
+#### get
 ```bash
-"$SKILL_DIR/scripts/list_unresolved.sh" "$REVIEWS_FILE"           # summary
-"$SKILL_DIR/scripts/list_unresolved.sh" "$REVIEWS_FILE" full      # full details
-"$SKILL_DIR/scripts/list_unresolved.sh" "$REVIEWS_FILE" ids       # just IDs
-```
-
-### get_thread.sh
-```bash
-"$SKILL_DIR/scripts/get_thread.sh" "$REVIEWS_FILE" PRRT_kwDOAbcd1234
-"$SKILL_DIR/scripts/get_thread.sh" "$REVIEWS_FILE" PRRT_kwDOAbcd1234 PRRT_kwDOEfgh5678
+"$SKILL_DIR/scripts/review.sh" get PRRT_kwDOAbcd1234
+"$SKILL_DIR/scripts/review.sh" get PRRT_kwDOAbcd1234 PRRT_kwDOEfgh5678
 ```
 Returns: Single thread as JSON object, or JSON array when multiple IDs given.
 Fields: `path`, `line`, `comments[]`, `isResolved`, `isOutdated`. Warns on missing IDs.
 
-### reply_with_commit.sh
+#### reply
+Requires at least one of `-m` or a commit hash.
 ```bash
-"$SKILL_DIR/scripts/reply_with_commit.sh" "$REVIEWS_FILE" PRRT_kwDOAbcd1234
-"$SKILL_DIR/scripts/reply_with_commit.sh" "$REVIEWS_FILE" PRRT_kwDOAbcd1234 abc1234
+"$SKILL_DIR/scripts/review.sh" reply PRRT_kwDOAbcd1234 abc1234                         # Commit hash → "Fixed in abc1234"
+"$SKILL_DIR/scripts/review.sh" reply PRRT_kwDOAbcd1234 -m "No changes needed"          # Message only
+"$SKILL_DIR/scripts/review.sh" reply PRRT_kwDOAbcd1234 -m "Refactored per suggestion" abc1234  # Both → "Fixed in abc1234\n\nRefactored per suggestion"
 ```
 
-### mark_resolved.sh
+#### mark
 ```bash
-"$SKILL_DIR/scripts/mark_resolved.sh" "$REVIEWS_FILE" PRRT_kwDOAbcd1234
-"$SKILL_DIR/scripts/mark_resolved.sh" "$REVIEWS_FILE" PRRT_kwDOAbcd1234 "Fixed in commit abc123"
+"$SKILL_DIR/scripts/review.sh" mark PRRT_kwDOAbcd1234
+"$SKILL_DIR/scripts/review.sh" mark PRRT_kwDOAbcd1234 "Fixed in commit abc123"
 ```
 
 ## JSON Structure
