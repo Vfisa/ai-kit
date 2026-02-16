@@ -282,7 +282,7 @@ _list_threads() {
         .threads
         | map($filter)
         | .[]
-        | \"[\(.id | split(\"_\")[-1])]: \(.path):\(.line // \"?\") - \(.comments[0].body | split(\"\n\")[0] | .[0:80])\"
+        | \"[\(.id)]: \(.path):\(.line // \"?\") - \(.comments[0].body | split(\"\n\")[0] | .[0:80])\"
       " "$reviews_file"
       ;;
     full)
