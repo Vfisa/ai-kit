@@ -47,12 +47,31 @@ Skip fetching, list unresolved threads from existing reviews file:
 
 ### Phase 2: Planning (default)
 
-After fetching, **enter planning mode** using `EnterPlanMode` tool. In the plan:
+After fetching, **enter planning mode** using `EnterPlanMode` tool.
 
-1. List all unresolved threads with file:line and brief summary
+**CRITICAL: Context is cleared when the plan is approved.** The plan must be self-contained. `$SKILL_DIR` will no longer be set after context clears, so **resolve it to the absolute path** in the plan. Do NOT use shell variables — write out the full path in every command. Beyond the thread list and proposed fixes, always include these sections in the plan (replacing `/absolute/path/to` with the actual resolved `$SKILL_DIR/scripts/review.sh` path):
+
+```markdown
+## Skill Script
+Commands (use the literal path, not a variable):
+- `/absolute/path/to/scripts/review.sh get <ID>` — get thread details
+- `/absolute/path/to/scripts/review.sh reply <ID> <commit-hash>` — reply with commit
+- `/absolute/path/to/scripts/review.sh reply <ID> -m "message"` — reply with message only
+- `/absolute/path/to/scripts/review.sh reply <ID> -m "message" <commit-hash>` — reply with both
+- `/absolute/path/to/scripts/review.sh mark <ID>` — mark locally resolved
+
+## Rules
+- NEVER resolve threads via GitHub API — only the reviewer may resolve their own comments
+- ONE commit per fix — never batch multiple fixes
+- Each fix: implement → commit → push → reply → mark → next thread
+- STAY in project root — never cd into skill directory
+```
+
+In the plan:
+1. List all unresolved threads with thread ID, file:line, and brief summary
 2. For each thread, outline the proposed fix approach
 3. Identify any dependencies between fixes
-4. Present the plan for user approval before implementing
+4. Include implementation order
 
 Skip planning only if user explicitly requests it (e.g., "skip planning", "no planning", "just fix it").
 
