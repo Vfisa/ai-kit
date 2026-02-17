@@ -49,7 +49,6 @@ A comprehensive toolkit for developers including specialized agents for code rev
 - ⚡ **Commands**: Task management, PR creation, merge conflict resolution, GitHub PR review processing
 - 📊 **Scripts**: Context window progress bar for statusline
 - 🔌 **MCP Server**: Linear integration
-- 🔐 **Auto-install Settings**: SessionStart hook that installs team-wide permissions automatically
 
 **[→ View Developer Plugin Documentation](./plugins/developer/README.md)**
 
