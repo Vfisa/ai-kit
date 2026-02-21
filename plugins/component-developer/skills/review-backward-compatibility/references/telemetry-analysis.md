@@ -81,7 +81,7 @@ SELECT
   ) as error_rate_pct
 FROM "KBC_USE4_37"."out.c-kbc_public_telemetry"."kbc_job"
 WHERE "kbc_component_id" LIKE '<COMPONENT_ID>%'
-  AND "job_start_time" >= DATEADD('day', -30, CURRENT_TIMESTAMP())
+  AND "job_start_at" >= TO_VARCHAR(DATEADD('day', -30, CURRENT_TIMESTAMP()), 'YYYY-MM-DD"T"HH24:MI:SS')
 ```
 
 **Interpretation:**
