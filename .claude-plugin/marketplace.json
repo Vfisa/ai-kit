@@ -11,9 +11,9 @@
   },
   "plugins": [
     {
-            "name": "component-developer",
-            "description": "Comprehensive toolkit for building Keboola Python components with Agent Skills format",
-            "version": "3.1.0",
+      "name": "component-developer",
+      "description": "Comprehensive toolkit for building Keboola Python components with Agent Skills format",
+      "version": "3.1.0",
       "source": "./plugins/component-developer",
       "category": "development"
     },
