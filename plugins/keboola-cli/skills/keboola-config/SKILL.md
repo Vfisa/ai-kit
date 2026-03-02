@@ -1,8 +1,7 @@
 ---
-name: keboola-config
+name: Keboola Configuration
 description: Use this skill when working with Keboola project configurations, understanding JSON config files, editing transformations, or analyzing Keboola project structure. Triggers on questions about Keboola configs, transformations, orchestrations, extractors, writers, or .keboola directories.
-metadata:
-  version: "1.0.0"
+version: 1.0.0
 ---
 
 # Keboola Configuration Knowledge
