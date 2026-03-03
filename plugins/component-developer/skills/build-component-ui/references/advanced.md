@@ -1107,11 +1107,33 @@ Template for extractor destination configuration:
 
 ## UI Development Tools
 
-### Testing Schemas Locally
+### Live configSchema Editor (Ctrl+D)
 
-1. Use the Keboola UI JSON Schema editor
-2. Test with sample data before deploying
-3. Validate against JSON Schema Draft-07
+Navigate to a component configuration page in the Keboola UI, hover over the configuration header, and press **Ctrl+D**. This opens a side panel on the right where you can edit the configSchema JSON live and immediately see how the form renders.
+
+- Useful for rapid iteration on UI layout without deploying a new tag
+- Only overrides the schema for the current browser session
+- The configSchema registered in Developer Portal is what the production UI uses
+
+### RAW Editors — Two Variants
+
+There are two RAW editors in the Keboola UI, depending on URL placement:
+
+**a) RAW after CONFIG_ID** (`.../components/COMPONENT_ID/CONFIG_ID/raw`):
+- Opens a raw JSON editor for that specific configuration's parameters (storage, parameters, runtime)
+- Has "Update Configuration" / "Update State" tabs and "RUN JOB" / "SAVE" buttons
+- Use this to directly edit parameters, add `runtime.tag` for branch testing, or run jobs with modified config
+
+**b) RAW after COMPONENT_ID** (`.../components/COMPONENT_ID/raw` — redirects to `/json/raw`):
+- Opens a raw JSON editor for the entire component definition (flags, features, uiOptions, configurationSchema, configurationRowSchema, definition with ECR URI/tag/digest, staging_storage, logging, forward_token)
+- Has a "Component tag" input field at the top
+- Use this to live-edit the configSchema, change component tags, or modify flags/features without using the Developer Portal API
+
+### Testing Workflow
+
+These features together allow testing both:
+- **Schema/UI rendering changes**: Use Ctrl+D editor or component-level RAW editor
+- **Backend/sync-action changes**: Use config-level RAW editor with `runtime.tag` pointing to a branch build
 
 ### Debugging Tips
 
@@ -1125,10 +1147,10 @@ Template for extractor destination configuration:
 | Issue | Solution |
 |-------|----------|
 | Fields not showing | Check `propertyOrder` and `required` |
-| Dependencies not working | Ensure correct `oneOf` structure |
+| Dependencies not working | Ensure correct `options.dependencies` structure (NOT `oneOf`) |
 | Dropdown empty | Verify sync action response format |
 | Validation not triggering | Check `pattern` regex syntax |
-| Nested dependencies failing | Use flat structure or `if/then/else` |
+| Nested dependencies failing | Use flat structure with `options.dependencies` |
 
 ### JSON Schema Validators
 
